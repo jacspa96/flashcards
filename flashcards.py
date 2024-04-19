@@ -1,23 +1,27 @@
-num_of_cards = int(input("Input the number of cards:\n"))
-cards = {}
-for i in range(num_of_cards):
-    term = input(f"The term for card #{i + 1}:\n")
-    while term in cards.keys():
-        term = input(f'The term "{term}" already exists. Try again:\n')
+from utils import add_card, remove_card, import_cards, export_cards, ask_about_cards
 
-    definition = input(f"The definition for card #{i + 1}:\n")
-    while definition in cards.values():
-        definition = input(f'The definition "{definition}" already exists. Try again:\n')
 
-    cards[term] = definition
+def start_menu():
+    cards = {}
+    while True:
+        command = input("\nInput the action (add, remove, import, export, ask, exit):\n")
+        match command:
+            case "add":
+                cards = add_card(cards)
+            case "remove":
+                cards = remove_card(cards)
+            case "import":
+                cards = import_cards(cards)
+            case "export":
+                export_cards(cards)
+            case "ask":
+                ask_about_cards(cards)
+            case "exit":
+                print("Bye bye!")
+                break
+            case _:
+                print("Unknown command!")
 
-for term, definition in cards.items():
-    answer = input(f'Print the definition of "{term}":\n')
-    if answer == definition:
-        print("Correct!")
-    elif answer in cards.values():
-        correct_term = [aux_term for aux_term in cards if cards[aux_term] == answer]
-        print(f'Wrong. The right answer is "{definition}", \
-                but your definition is correct for "{correct_term}".')
-    else:
-        print(f'Wrong. The right answer is "{definition}".')
+
+if __name__ == '__main__':
+    start_menu()
