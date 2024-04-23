@@ -1,31 +1,28 @@
-from utils import (get_and_log_user_input, add_card, remove_card, import_cards,
-                   export_cards, ask_about_cards, write_logs,
-                   find_the_hardest_terms, reset_mistakes_count)
+from menu import Menu
 
 
 def start_menu():
-    # sys.stdout = logger = Logger()  # redirect stdout to Logger class
-    cards = {}
+    flashcards_menu = Menu()
     while True:
-        command = get_and_log_user_input("\nInput the action (add, remove, import, "
-                                         "export, ask, exit, log, hardest card, reset stats):")
+        command = flashcards_menu.get_and_log_user_input("\nInput the action (add, remove, import, "
+                                                         "export, ask, exit, log, hardest card, reset stats):")
         match command:
             case "add":
-                cards = add_card(cards)
+                flashcards_menu.add_card()
             case "remove":
-                cards = remove_card(cards)
+                flashcards_menu.remove_card()
             case "import":
-                cards = import_cards(cards)
+                flashcards_menu.import_cards()
             case "export":
-                export_cards(cards)
+                flashcards_menu.export_cards()
             case "ask":
-                cards = ask_about_cards(cards)
+                flashcards_menu.ask_about_cards()
             case "log":
-                write_logs()
+                flashcards_menu.write_logs()
             case "hardest card":
-                find_the_hardest_terms(cards)
+                flashcards_menu.find_the_hardest_terms()
             case "reset stats":
-                reset_mistakes_count(cards)
+                flashcards_menu.reset_mistakes_count()
             case "exit":
                 print("Bye bye!")
                 break
