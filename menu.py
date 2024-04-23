@@ -50,8 +50,9 @@ class Menu:
         else:
             self.logger.info("The card has been removed.")
 
-    def import_cards(self) -> None:
-        file_name = self.get_and_log_user_input("File name:")
+    def import_cards(self, file_name: str = None) -> None:
+        file_name = file_name if file_name is not None \
+            else self.get_and_log_user_input("File name:")
         try:
             file = open(file_name)
             lines = file.readlines()
@@ -67,12 +68,13 @@ class Menu:
             for i in range(0, num_of_lines - 1, 3):
                 term = lines[i]
                 definition = lines[i + 1]
-                mistakes = lines[i + 2]
+                mistakes = int(lines[i + 2])
                 self.cards[term] = {DEFINITION_KEY: definition, MISTAKES_KEY: mistakes}
             self.logger.info(f"{num_of_lines // 3} cards have been loaded.")
 
-    def export_cards(self) -> None:
-        file_name = self.get_and_log_user_input("File name:")
+    def export_cards(self, file_name: str = None) -> None:
+        file_name = file_name if file_name is not None \
+            else self.get_and_log_user_input("File name:")
         with open(file_name, "w") as f:
             for term, term_info in self.cards.items():
                 f.write(term + "\n")
